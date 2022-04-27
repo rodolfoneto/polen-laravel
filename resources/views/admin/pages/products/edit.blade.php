@@ -12,8 +12,10 @@
             <form action="{{ route('products.update', $product->sku) }}" class="form" method="POST">
                 @csrf
                 @method('PUT')
-                
                 @include('admin.pages.products._partials.form')
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Editar</button>
+                </div>
             </form>
         </div>
     </div>

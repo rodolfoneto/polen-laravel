@@ -13,7 +13,7 @@ class StoreUpdateProducts extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,14 @@ class StoreUpdateProducts extends FormRequest
      */
     public function rules()
     {
+        $sku = $this->segment(3);
         return [
-            //
+            'sku' => "required|unique:products,sku,{$sku},sku|max:255",
+            'title' => 'required|max:255',
+            'type' => 'required',
+            'price' => "nullable|regex:/^\d+(\.\d{1,2})?$/",
+            "price_promotional" => "nullable|regex:/^\d+(\.\d{1,2})?$/",
+            'status' => 'required'
         ];
     }
 }

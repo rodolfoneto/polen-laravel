@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateProducts;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class ProductController extends Controller
         return view('admin.pages.products.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUpdateProducts $request)
     {
         if(!$this->repository->create($request->all())) {
             return redirect()->back()->withInput();
@@ -81,7 +82,7 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Request $request, $sku)
+    public function update(StoreUpdateProducts $request, $sku)
     {
         // $sku = $request->sku;
         $product = $this->repository->where('sku', $sku)->first();

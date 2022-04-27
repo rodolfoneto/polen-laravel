@@ -12,6 +12,9 @@
             <form action="{{ route('products.store') }}" class="form" method="POST">
                 @csrf
                 @include('admin.pages.products._partials.form')
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Criar</button>
+                </div>
             </form>
         </div>
     </div>
