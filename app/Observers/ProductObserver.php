@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Models\Products;
+use App\Models\Product;
 
 class ProductObserver
 {
@@ -12,7 +12,7 @@ class ProductObserver
      * @param  \App\Models\Models\Products  $products
      * @return void
      */
-    public function creating(Products $products)
+    public function creating(Product $products)
     {
         //
     }
@@ -23,7 +23,7 @@ class ProductObserver
      * @param  \App\Models\Models\Products  $products
      * @return void
      */
-    public function updating(Products $products)
+    public function updating(Product $products)
     {
         //
     }

@@ -257,6 +257,11 @@ return [
             'icon' => 'fas fa-lock',
         ],
         [
+            'text' => 'Perfis',
+            'url'  => 'admin/profiles',
+            'icon' => 'fas fa-id-card',
+        ],
+        [
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
