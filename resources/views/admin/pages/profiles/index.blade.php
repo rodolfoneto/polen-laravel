@@ -34,6 +34,7 @@
                         <td>
                             <a href="{{ route('profiles.show', $profile->id) }}" class="btn btn-dark" title="Informações"><i class="fas fa-magnifying-glass"></i>E</a>
                             <a href="{{ route('profiles.edit', $profile->id) }}" class="btn btn-info" title="Editar"><i class="fas fa-pen"></i></a>
+                            <a href="{{ route('profiles.permissions', $profile->id) }}" class="btn btn-info" title="Permissões"><i class="fas fa-lock"></i></a>
                         </td>
                     </tr>
                 @endforeach

@@ -7,6 +7,13 @@ Route::prefix('admin')
     ->group(function() {
 
     /**
+     * Permissions x Profiles
+     */
+    Route::post('profiles/{id}/permissions/store', 'ACL\\PermissionProfileController@attachPermissionProfile')->name('profiles.permissions.store');
+    Route::get('profiles/{id}/permissions/available', 'ACL\\PermissionProfileController@permissionAvailable')->name('profiles.permissions.available');
+    Route::get('profiles/{id}/permissions', 'ACL\\PermissionProfileController@permissions')->name('profiles.permissions');
+
+    /**
      * Products Routes
      */
     Route::get('products/show/{sku}', 'ProductController@show')->name('products.show');
