@@ -249,6 +249,12 @@ return [
         [
             'text' => 'Produtos',
             'url'  => 'admin/products',
+            'icon' => 'fas fa-cart-plus'
+        ],
+        [
+            'text' => 'Permissões',
+            'url'  => 'admin/permissions',
+            'icon' => 'fas fa-lock',
         ],
         [
             'text' => 'blog',
