@@ -9,7 +9,7 @@
 @section('content')
     @include('admin.includes.alerts')   
     <div class="card-header">
-        <form action="{{ route('profiles.search') }}" class="form form-inline" method="GET">
+        <form action="{{ route('profiles.permissions.available', $profile->id) }}" class="form form-inline" method="GET">
             @csrf
             <input type="text" name="filter" class="form-control" value="{{ $filters['filter'] ?? '' }}" placeholder="Filtro">
             <button type="submit" class="btn btn-info">Buscar</button>

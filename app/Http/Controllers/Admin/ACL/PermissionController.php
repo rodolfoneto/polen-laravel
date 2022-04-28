@@ -57,9 +57,9 @@ class PermissionController extends Controller
      * @param  \App\Models\Admin\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function show(Permission $permission)
+    public function show($id)
     {
-        // $permission = $this->repository->find($id);
+        $permission = $this->repository->find($id);
         if(!$permission)
             return redirect()->route('permissions.index');
         return view('admin.pages.permissions.show', ['permission' => $permission]);

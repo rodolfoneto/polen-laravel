@@ -10,9 +10,8 @@
 @section('content')
     @include('admin.includes.alerts')
     <div class="card-header">
-        <form action="{{ route('profiles.search') }}" class="form form-inline" method="GET">
-            @csrf
-            <input type="text" name="filter" class="form-control" value="{{ $filters['filter'] ?? '' }}" placeholder="Filtro">
+        <form action="{{ route('profiles.permissions', $profile->id) }}" class="form form-inline" method="GET">
+            <input type="text" name="filter" class="form-control" value="{{ $filters ?? '' }}" placeholder="Filtro">
             <button type="submit" class="btn btn-info">Buscar</button>
         </form>
     </div>
@@ -29,13 +28,15 @@
                     <tr>
                         <td>{{ $permission->name }}</td>
                         <td>
-                            <a href="{{ route('permissions.show', $permission->id) }}" class="btn btn-dark"><i class="fas fa-info"></i></a>
-                            <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-info"><i class="fas fa-highlighter"></i></a>
+                            <form action="{{ route('profiles.permissions.destroy', [$profile->id, $permission->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-dark" title="Desatrelar do perfil"><i class="fas fa-unlock"></i></a>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
     </div>
 @stop

@@ -7,11 +7,11 @@
 @stop
 
 @section('content')
-    <p></p>
     <div class="card-header">
-        <form action="{{ route('permissions.search') }}" class="form-inline" method="get">
-            <input type="text" name="term" class="input-control" value="{{ $term ?? '' }}">
-            <x-adminlte-button type="submit" label="Dark" theme="dark" icon="fas fa-adjust"/>
+        <form action="{{ route('permissions.search') }}" class="form form-inline" method="GET">
+            @csrf
+            <input type="text" name="filter" class="form-control" value="{{ $filters['filter'] ?? '' }}" placeholder="Filtro">
+            <button type="submit" class="btn btn-info">Buscar</button>
         </form>
     </div>
     <div class="card-body">
@@ -38,6 +38,12 @@
                 @endforeach
             </tbody>
         </table>
-
+    </div>
+    <div class="card-footer">
+        @if (isset($filters))
+            {!! $permissions->appends($filters)->links() !!}
+        @else
+            {!! $permissions->links() !!}
+        @endif
     </div>
 @stop

@@ -19,30 +19,38 @@ class PermissionProfileController extends Controller
     }
 
 
-    public function permissions($idProfile)
+    public function permissions(Request $request, $idProfile)
     {
+        $filters = $request->filter;
         $profile = $this->profile->find($idProfile);
         if (!$profile) {
             return redirect()->back()->with('error', 'Perfil não encontrado');
         }
 
-        $permissions = $profile->permissions()->paginate();
-
-        return view('admin.pages.profiles.permissions.permissions', compact('profile','permissions'));
+        $permissions = $profile->permissions()->where('name', 'LIKE', "%{$filters}%")->paginate();
+        return view('admin.pages.profiles.permissions.permissions', compact('profile','permissions', 'filters'));
     }
 
-    public function permissionAvailable($idProfile)
+
+    /**
+     * 
+     */
+    public function permissionAvailable(Request $request, $idProfile)
     {
+        $filters = $request->filter;
         if (!$profile = $this->profile->find($idProfile)) {
             return redirect()->back()->with('error', 'Perfil não encontrado');
         }
 
-        $permissions = $this->permission->paginate();
+        $permissions = $profile->permissionsAvailable($filters);
         
-        return view('admin.pages.profiles.permissions.permissionAvailable', compact('profile','permissions'));
+        return view('admin.pages.profiles.permissions.permissionAvailable', compact('profile','permissions', 'filters'));
     }
 
 
+    /**
+     * 
+     */
     public function attachPermissionProfile(Request $request, $idProfile)
     {
         if (!$profile = $this->profile->find($idProfile)) {
@@ -54,6 +62,18 @@ class PermissionProfileController extends Controller
         }
 
         $profile->permissions()->attach($request->permissions);
-        return redirect()->route('profiles.permissions', $profile->id);
+        return redirect()->route('profiles.permissions', $profile->id)->with('success', "Permissão vinculada com sucesso");
+    }
+
+
+    public function deattachPermissionProfile(Request $request, $profileId, $permissionId)
+    {
+        $profile = $this->profile->find($profileId);
+        $permission = $this->permission->find($permissionId);
+        if(!$permission || !$profile) {
+            return redirect()->back()->with('error', 'Perfil ou permissão não existe');
+        }
+        $profile->permissions()->detach($permission);
+        return redirect()->route('profiles.permissions', $profile->id)->with('success', "{$permission->name} desvinculada com sucesso");
     }
 }
