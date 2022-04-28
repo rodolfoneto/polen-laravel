@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    private $repository;
+    protected $repository;
 
     public function __construct(Products $products)
     {

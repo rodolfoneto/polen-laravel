@@ -11,7 +11,7 @@ use App\Models\Permission;
 class PermissionController extends Controller
 {
 
-    private $repository;
+    protected $repository;
 
     public function __construct(Permission $permission)
     {

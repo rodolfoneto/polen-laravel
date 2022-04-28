@@ -9,9 +9,10 @@
 @section('content')
     <p></p>
     <div class="card-header">
-        <form action="{{ route('profiles.search') }}" class="form-inline" method="get">
-            <input type="text" name="term" class="input-control" value="{{ $term ?? '' }}">
-            <x-adminlte-button type="submit" label="Dark" theme="dark" icon="fas fa-adjust"/>
+        <form action="{{ route('profiles.search') }}" class="form form-inline" method="GET">
+            @csrf
+            <input type="text" name="filter" class="form-control" value="{{ $filters['filter'] ?? '' }}" placeholder="Filtro">
+            <button type="submit" class="btn btn-info">Buscar</button>
         </form>
     </div>
     <div class="card-body">
@@ -31,13 +32,19 @@
                         <td>{{ $profile->name }}</td>
                         <td>{{ $profile->description }}</td>
                         <td>
-                            <a href="{{ route('profiles.show', $profile->id) }}" class="btn btn-dark">Ver</a>
-                            <a href="{{ route('profiles.edit', $profile->id) }}" class="btn btn-info">Edit</a>
+                            <a href="{{ route('profiles.show', $profile->id) }}" class="btn btn-dark" title="Informações"><i class="fas fa-magnifying-glass"></i>E</a>
+                            <a href="{{ route('profiles.edit', $profile->id) }}" class="btn btn-info" title="Editar"><i class="fas fa-pen"></i></a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
+    </div>
+    <div class="card-footer">
+        @if (isset($filters))
+            {!! $profiles->appends($filters)->links() !!}
+        @else
+            {!! $profiles->links() !!}
+        @endif
     </div>
 @stop

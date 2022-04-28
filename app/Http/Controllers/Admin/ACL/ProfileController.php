@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
 
-    private $repository;
+    protected $repository;
 
     public function __construct(Profile $profile)
     {
@@ -24,7 +24,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = $this->repository->all();
+        $profiles = $this->repository->latest()->paginate();
         return view('admin.pages.profiles.index', ['profiles' => $profiles]);
     }
 
@@ -105,16 +105,24 @@ class ProfileController extends Controller
 
 
     /**
-     * Make a searsh
+     * Search results
+     *
+     * @param  Request $request
+     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $request)
     {
-        $term = filter_input(INPUT_GET, 'term');
+        $filters = $request->only('filter');
+
         $profiles = $this->repository
-            ->where('name', 'LIKE', "%{$term}%")
-            ->orWhere('description', 'LIKE', "%{$term}%")
-            ->get();
-        
-        return view('admin.pages.profiles.index', ['profiles' => $profiles, 'term' => $term]);
+                            ->where(function($query) use ($request) {
+                                if ($request->filter) {
+                                    $query->where('name', 'LIKE', "%{$request->filter}%");
+                                    $query->orWhere('description', 'LIKE', "%{$request->filter}%");
+                                }
+                            })
+                            ->paginate();
+
+        return view('admin.pages.profiles.index', compact('profiles', 'filters'));
     }
 }

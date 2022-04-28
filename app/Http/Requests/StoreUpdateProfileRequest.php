@@ -23,8 +23,9 @@ class StoreUpdateProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->segment(3);
         return [
-            'name' => 'required|max:255|unique:profiles',
+            'name' => "required|max:255|unique:profiles,name,{$id},id",
             'description' => 'nullable'
         ];
     }
